@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Appointment Price Assign Form</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="registration"
+                type="Submit">Logout</button>
+    </form>
+    <form th:action="@{/user/home}" method="get">
+        <button class="btn btn-md btn-info btn-block" name="registration"
+                type="Submit">Back to Home Page</button>
+    </form>
+    <a th:href="@{/dentist/{did}/appointments(did=${dentist.getId()})}" class="btn btn-md btn-success btn-block" role="button">Back To Appointments</a>
+
+    <div class="container">
+        <div class="panel-group" style="margin-top:40px">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span th:utext="${userName}"></span>
+                </div>
+                <div class="panel-body">
+                    <img th:src="@{/images/icon.png}" class="img-responsive center-block" width="150" height="150"/>
+                </div>
+                <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
+                <br/>
+                <form autocomplete="off" action="#" th:action="@{/appointment/{aid}/setPrice(aid=${appointment.getId()})}"
+                      th:object="${appointment}" method="put"
+                      role="form">
+                    <h2 style="text-align: center" th:utext="${Message}"></h2>
+                    <h4 style="margin-left: 15%;">Date: <span th:text="${appointment.getDate()}"></span></h4>
+                    <h4 style="margin-left: 15%;">Time: From <span th:text="${appointment.getStart()}"></span><span>:00 to </span>
+                        <span th:text="${appointment.getEnd()}"></span><span>:00</span>
+                    </h4>
+                    <h4 style="margin-left: 15%;">Patient Name: <span th:text="${appointment.getUser().getName()}"></span>
+                        <span> </span>
+                        <span th:text="${appointment.getUser().getLastName()}"></span>
+                    </h4>
+                    <div th:if="${appointment != null && appointment.getPrice() == null}">
+                        <div class="form-group">
+                            <input type=number step=0.01 th:field="*{price}" placeholder="Price"
+                                   class="form-control"  style="width: 70%; margin: auto;"/>
+                        </div>
+                    </div>
+                    <div th:if="${appointment != null && appointment.getPrice() != null}">
+                        <div class="form-group">
+                            <h4 style="margin-left: 15%;">Price: $<span th:text="${appointment.getPrice()}"></span></h4>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block" style="width: 70%; margin: auto;">Submit</button>
+                    </div>
+
+                    <span style="padding-left: 15%; color: red" th:utext="${successMessage}"></span>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

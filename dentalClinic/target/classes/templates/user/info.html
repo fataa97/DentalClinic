@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>User Info Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<form th:action="@{/logout}" method="get">
+    <button class="btn btn-md btn-danger btn-block" name="registration"
+            type="Submit">Logout</button>
+</form>
+<form th:action="@{/user/home}" method="get">
+    <button class="btn btn-md btn-info btn-block" name="registration"
+            type="Submit">Back to Home Page</button>
+</form>
+<a th:href="@{/dentist/{did}/appointments(did=${dentist.getDentistProfile().getId()})}" class="btn btn-md btn-success btn-block" role="button">Back To Appointments</a>
+<div class="container">
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span th:utext="${userName}"></span>
+            </div>
+            <div class="panel-body">
+                <img th:src="@{/images/icon.png}" class="img-responsive center-block" width="150" height="150"/>
+            </div>
+            <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
+            <br/>
+            <div class="row">
+                <div style="margin-left: 17.5%" class="caption">
+                    <h1 style="color: #004080">Patient Info</h1>
+                    <h1 th:text="${patientName}"></h1>
+                    <p><span>Contact Info: </span><span th:text="${patient.getEmail()}"></span></p>
+                </div>
+                <br>
+                <div class="col-sm-10 col-md-10">
+                    <h2 style="margin-left: 20%">Incoming Appointments</h2>
+                    <div th:each="appointment :${appointmentList}">
+                        <div th:if="${appointment != null && appointment.getPrice() == null}">
+                            <div class="thumbnail" style="margin-left: 20%;">
+                                <div class="caption">
+                                    <h3>Date: <span th:text="${appointment.getDate()}"></span></h3>
+                                    <h4>Time: From <span th:text="${appointment.getStart()}"></span><span>:00 to </span>
+                                              <span th:text="${appointment.getEnd()}"></span><span>:00</span>
+                                    </h4>
+                                    <h5>Dentist Name: <span th:text="${appointment.getDentistProfile().getUser().getName()}"></span>
+                                              <span> </span>
+                                              <span th:text="${appointment.getDentistProfile().getUser().getLastName()}"></span>
+                                    </h5>
+                                    <h5>Area: <span th:text="${appointment.getDentistProfile().getArea()}"></span></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="col-sm-10 col-md-10">
+                <h2 style="margin-left: 20%" >History Appointments</h2>
+                    <div th:each="appointment :${appointmentList}">
+                        <div th:if="${appointment != null && appointment.getPrice() != null}">
+                            <div class="thumbnail" style="margin-left: 20%;">
+                                <div class="caption">
+                                    <h3>Date: <span th:text="${appointment.getDate()}"></span></h3>
+                                    <h4>Time: From <span th:text="${appointment.getStart()}"></span><span>:00 to </span>
+                                        <span th:text="${appointment.getEnd()}"></span><span>:00</span>
+                                    </h4>
+                                    <h5>Dentist Name: <span th:text="${appointment.getDentistProfile().getUser().getName()}"></span>
+                                        <span> </span>
+                                        <span th:text="${appointment.getDentistProfile().getUser().getLastName()}"></span>
+                                    </h5>
+                                    <h5>Area: <span th:text="${appointment.getDentistProfile().getArea()}"></span></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

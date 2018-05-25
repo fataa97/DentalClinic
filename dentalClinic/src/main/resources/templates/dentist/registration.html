@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration Form</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<form th:action="@{/user/home}" method="get">
+    <button class="btn btn-md btn-warning btn-block" type="Submit">Back To Home</button>
+</form>
+
+<div class="container">
+    <div class="row">
+        <form autocomplete="off" action="#" th:action="@{/dentists/new}"
+                  th:object="${dentist}" method="post"
+                  role="form">
+                <h2 style="text-align: center">Registration Form</h2>
+                <div class="form-group">
+                    <input type="text" th:field="*{phoneNumber}" placeholder="Phone Number"
+                           class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{gender}"
+                           placeholder="Gender: FEMALE/MALE" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{img}"
+                           placeholder="Image URL" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{address1}" placeholder="Address Line1"
+                           class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{address2}"
+                           placeholder="Address Line2" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{city}"
+                           placeholder="City" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{country}"
+                           placeholder="Country" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{zipCode}"
+                           placeholder="Zip Code" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{area}"
+                           placeholder="Area" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Become a Dentist</button>
+                </div>
+
+                <span style="color: red" th:utext="${successMessage}"></span>
+            </form>
+    </div>
+</div>
+
+</body>
+</html>

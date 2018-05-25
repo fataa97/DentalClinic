@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="registration"
+                type="Submit">Logout</button>
+    </form>
+
+    <div class="container">
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span th:utext="${userName}"></span>
+            </div>
+            <div class="panel-body">
+                <img th:src="@{/images/icon.png}" class="img-responsive center-block" width="150" height="150"/>
+            </div>
+
+            <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
+            <br>
+
+            <div th:if="${user != null && user.getDentistProfile()==null}">
+                <p class="admin-message-text text-center">Apply For another Role</p>
+                <a th:href="@{/dentists/new}" class="btn btn-md btn-primary btn-block">Register As dentist</a>
+            </div>
+
+            <div th:if="${user != null && user.getDentistProfile()==null}">
+                <p class="admin-message-text text-center">Start Appointment</p>
+                <a th:href="@{/dentists}" class="btn btn-md btn-primary btn-block">Find Dentists</a>
+                <a th:href="@{/user/{uid}/appointments(uid=${user.id})}" class="btn btn-md btn-primary btn-block">Incoming Appointments</a>
+                <a th:href="@{/user/{uid}/appointments/history(uid=${user.id})}" class="btn btn-md btn-primary btn-block">History Appointments</a>
+                <br>
+            </div>
+
+            <div th:if="${user != null && user.getDentistProfile() != null}">
+                <p class="admin-message-text text-center">Welcome Dentist <span th:text="${user.getName()}"></span><span> </span><span th:text="${user.getLastName()}"></span></p>
+                <a th:href="@{/dentist/{did}/appointments(did=${user.getDentistProfile().getId()})}" class="btn btn-md btn-primary btn-block">Incoming Appointments</a>
+                <a th:href="@{/dentist/{did}/appointments/history(did=${user.getDentistProfile().getId()})}" class="btn btn-md btn-primary btn-block">History Appointments</a>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
